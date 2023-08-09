@@ -145,6 +145,14 @@
                 everyone = urlParams.get('everyone');
             }
 
+            if (urlParams.has('timeout')) {
+                timeout = urlParams.get('timeout');
+            }
+
+            if (urlParams.has('gap')) {
+                gap = urlParams.get('gap');
+            }
+
             if (urlParams.has('username') && urlParams.has('token')) {
                 username = urlParams.get('username');
                 token = urlParams.get('token');
