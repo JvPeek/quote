@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/quote.css" media="screen" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap" rel="stylesheet">
+    <title>Quote Overlay</title>
+</head>
+
+<body onload="window.scrollTo(0, 0);">
+    <div id="container">
+        <video autoplay loop muted>
+            <source src="assets/smoke.mp4">
+        </video>
+        <blockquote id="quoteContainer">
+            <p></p>
+            <footer>
+                <cite><span></span><small></small></cite>
+            </footer>
+        </blockquote>
+    </div>
+
+    <script src="//unpkg.com/twitch-js@>2.0.0-beta.41"></script>
+
+    <script type="module">
+        const { Chat } = window.TwitchJs;
+        let token = undefined;
+        let username = undefined;
+        let rewardID = undefined;
+        let channel = "JvPeek";
+        let everyone = false;
+        let timeout = 10000;
+        let gap = 1000;
+
+        class Queue {
+            constructor() {
+                this.elements = {};
+                this.head = 0;
+                this.tail = 0;
+            }
+            enqueue(element) {
+                this.elements[this.tail] = element;
+                this.tail++;
+                if (this.length == 1) {
+                    displayElement();
+                }
+            }
+            dequeue() {
+                const item = this.elements[this.head];
+                delete this.elements[this.head];
+                this.head++;
+
+                return item;
+            }
+            peek() {
+                return this.elements[this.head];
+            }
+            get length() {
+                return this.tail - this.head;
+            }
+            get isEmpty() {
+                return this.length === 0;
+            }
+        }
+        let quotes = new Queue();
+        const container = "#quoteContainer "
+
+        function displayElement() {
+
+            const element = quotes.peek();
+            document.querySelector("#container").classList.add("visible");
+            document.querySelector(container + "p").innerText = element.text;
+            document.querySelector(container + "cite span").innerText = element.cite;
+            document.querySelector(container + "cite small").innerText = element.year;
+            window.setTimeout(hideElement, timeout);
+        }
+        function hideElement() {
+            quotes.dequeue();
+            document.querySelector("#container").classList.remove("visible");
+            if (quotes.length > 0) {
+                window.setTimeout(displayElement, gap);
+
+            }
+        }
+        const handleMessage = (msg) => {
+            if (msg.event != "PRIVMSG") { return; }
+            if (rewardID != undefined) {
+                if (msg.tags.customRewardId != undefined) {
+                    if (msg.tags.customRewardId == rewardID) {
+                    }
+                }
+            }
+            console.log();
+            if (rewardID != undefined) {
+
+            }
+            if (msg.message.startsWith("!")) {
+                if (msg.tags.isModerator == true || msg.tags.badges.broadcaster == true || msg.username == "jvpeek" || everyone) {
+                    if (msg.message.startsWith("!quote ")) {
+                        let parameter = msg.message.split(/ (.*)/s)[1];
+
+                        let quoteUser = parameter.match(/@\w+/);
+                        parameter = parameter.replace(quoteUser, "").trim();
+
+                        let newObject = {
+                            text: parameter,
+                            cite: quoteUser || channel,
+                            year: (new Date).getFullYear()
+                        }
+                        quotes.enqueue(newObject);
+                        console.log(quotes);
+                    }
+                }
+                if (msg.tags.isModerator == false && msg.tags.badges.broadcaster != true && msg.username != "jvpeek") {
+                    console.log("nope.jpg");
+                    return;
+                }
+
+                // mods gay
+
+            }
+        };
+
+        function chatsay(channel, text) {
+            if (token != undefined) {
+                chatobj.say(channel, text);
+            } else {
+                console.log(text + " is what i would say if I HAD A TOKEN!!11!"); //Fixed that for you
+            }
+        }
+        const run = async () => {
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            // Parse channel parameter
+            if (urlParams.has('channel')) {
+                channel = urlParams.get('channel');
+            }
+            if (urlParams.has('rewardID')) {
+                rewardID = urlParams.get('rewardID');
+            }
+            if (urlParams.has('everyone')) {
+                everyone = urlParams.get('everyone');
+            }
+
+            if (urlParams.has('username') && urlParams.has('token')) {
+                username = urlParams.get('username');
+                token = urlParams.get('token');
+            }
+            const chat = new Chat({
+                token,
+                username,
+                log: { level: "warn" }
+            });
+
+
+            chat.on("*", (message) => {
+                handleMessage(message);
+            });
+            await chat.connect();
+            await chat.join(channel);
+            return chat;
+
+        };
+        const chatobj = run();
+
+
+    </script>
+</body>
+
+</html>

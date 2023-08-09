@@ -1,0 +1,77 @@
+:root {
+    color-scheme: dark;
+  }
+  
+  body {
+    hyphens: auto;
+    margin: 0;
+    max-height: 100vh;
+    overflow: hidden;
+  }
+  #container {
+    align-items: center;
+    aspect-ratio: 16/9;
+    background: #171717;
+    background-image: url(../assets/portrait.jpg);
+    background-position: right;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    container: inline;
+    display: none;
+    height: 100vh;
+    overflow: hidden;
+    max-height: 100vh;
+  }
+  #container.visible {
+    display: flex;
+  }
+  
+  video {
+    display: block;
+    opacity: 10%;
+    position: absolute;
+    --height: calc(100cqh / 9);
+    --width: calc(100cqw / 16);
+    --max: max(var(--height), var(--width));
+    height: calc(var(--max) * 9);
+  }
+  
+  blockquote {
+    margin: 0;
+    padding: 3rem;
+    font-size: 3vw;
+    width: 30ch;
+    z-index: 100;
+  }
+  
+  p {
+    text-wrap: balance;
+  }
+  
+  p::before {
+    content: "\201E";
+  }
+  
+  p::after {
+    content: "\201C";
+  }
+  
+  footer {
+    text-align: right;
+  }
+  
+  cite {
+    align-items: center;
+    display: inline-flex;
+    font-family: sans-serif;
+    font-size: 1.5rem;
+    text-align: right;
+    gap: 0.35em;
+    justify-content: flex-end;
+  }
+  
+  small {
+    font-size: 0.75em;
+    font-style: normal;
+  }
+  
