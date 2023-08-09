@@ -85,12 +85,13 @@
 
             }
         }
+        function isMod(msg) { return msg.tags.isModerator == true || msg.tags.badges.broadcaster == true || msg.username == "jvpeek" };
         const handleMessage = (msg) => {
             if (msg.event != "PRIVMSG") { return; }
             if (msg.tags.customRewardId != undefined) {
                 console.log(msg.tags.customRewardId);
             }
-            if (rewardID != undefined) {
+            if (rewardID != undefined && (isMod(msg) || everyone)) {
                 if (msg.tags.customRewardId != undefined) {
                     if (msg.tags.customRewardId == rewardID) {
                         addQuote(msg.message);
@@ -98,21 +99,15 @@
                 }
             }
             if (msg.message.startsWith("!")) {
-                if (msg.tags.isModerator == true || msg.tags.badges.broadcaster == true || msg.username == "jvpeek" || everyone) {
+                if (isMod(msg) || everyone) {
                     if (msg.message.startsWith("!quote ") && rewardID === undefined) {
-                        
+
                         let parameter = msg.message.split(/ (.*)/s)[1];
                         addQuote(parameter);
 
                         console.log(quotes);
                     }
                 }
-                if (msg.tags.isModerator == false && msg.tags.badges.broadcaster != true && msg.username != "jvpeek") {
-                    console.log("nope.jpg");
-                    return;
-                }
-
-                // mods gay
 
             }
         };
@@ -135,7 +130,7 @@
             }
         }
         const run = async () => {
-            
+
             const urlParams = new URLSearchParams(window.location.search);
             // Parse channel parameter
             if (urlParams.has('channel')) {
