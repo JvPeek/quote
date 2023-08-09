@@ -39,13 +39,15 @@
   blockquote {
     margin: 0;
     padding: 3rem;
-    font-size: 3vw;
+    font-size: 4vw;
     width: 30ch;
     z-index: 100;
   }
   
   p {
-    text-wrap: balance;
+    
+    word-wrap: break-word;
+    
   }
   
   p::before {
