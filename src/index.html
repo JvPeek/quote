@@ -87,30 +87,23 @@
         }
         const handleMessage = (msg) => {
             if (msg.event != "PRIVMSG") { return; }
+            if (msg.tags.customRewardId != undefined) {
+                console.log(msg.tags.customRewardId);
+            }
             if (rewardID != undefined) {
                 if (msg.tags.customRewardId != undefined) {
                     if (msg.tags.customRewardId == rewardID) {
+                        addQuote(msg.message);
                     }
                 }
             }
-            console.log();
-            if (rewardID != undefined) {
-
-            }
             if (msg.message.startsWith("!")) {
                 if (msg.tags.isModerator == true || msg.tags.badges.broadcaster == true || msg.username == "jvpeek" || everyone) {
-                    if (msg.message.startsWith("!quote ")) {
+                    if (msg.message.startsWith("!quote ") && rewardID === undefined) {
+                        
                         let parameter = msg.message.split(/ (.*)/s)[1];
+                        addQuote(parameter);
 
-                        let quoteUser = parameter.match(/@\w+/);
-                        parameter = parameter.replace(quoteUser, "").trim();
-
-                        let newObject = {
-                            text: parameter,
-                            cite: quoteUser || channel,
-                            year: (new Date).getFullYear()
-                        }
-                        quotes.enqueue(newObject);
                         console.log(quotes);
                     }
                 }
@@ -123,7 +116,17 @@
 
             }
         };
+        function addQuote(text) {
+            let quoteUser = text.match(/@\w+/);
+            let parameter = text.replace(quoteUser, "").trim();
 
+            let newObject = {
+                text: parameter,
+                cite: quoteUser || channel,
+                year: (new Date).getFullYear()
+            }
+            quotes.enqueue(newObject);
+        }
         function chatsay(channel, text) {
             if (token != undefined) {
                 chatobj.say(channel, text);
@@ -132,8 +135,8 @@
             }
         }
         const run = async () => {
-            const queryString = window.location.search;
-            const urlParams = new URLSearchParams(queryString);
+            
+            const urlParams = new URLSearchParams(window.location.search);
             // Parse channel parameter
             if (urlParams.has('channel')) {
                 channel = urlParams.get('channel');
@@ -144,11 +147,9 @@
             if (urlParams.has('everyone')) {
                 everyone = urlParams.get('everyone');
             }
-
             if (urlParams.has('timeout')) {
                 timeout = urlParams.get('timeout');
             }
-
             if (urlParams.has('gap')) {
                 gap = urlParams.get('gap');
             }
