@@ -113,7 +113,10 @@
         function addQuote(text) {
             let quoteUser = text.match(/@\w+/);
             let parameter = text.replace(quoteUser, "").trim();
-
+            parameter = parameter.replace(/[^\w\s\d\uD800-\uDBFF\uDC00-\uDFFF\.,!?'"()\[\]äöüÄÖÜß-]/g, '');
+            if (parameter === "") {
+                return
+            }
             let newObject = {
                 text: parameter,
                 cite: quoteUser || channel,
