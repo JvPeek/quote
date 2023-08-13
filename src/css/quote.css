@@ -1,116 +1,128 @@
 :root {
-    color-scheme: dark;
-  }
-  @font-face {
-    font-family: LatoLight;
-    src: url(../assets/fonts/Lato-Light.ttf);
-  }
-  @font-face {
-    font-family: ShadowsIntoLight;
-    src: url(../assets/fonts/ShadowsIntoLight-Regular.ttf);
-  }
-  body {
-    hyphens: auto;
-    margin: 0;
-    max-height: 100vh;
-    overflow: hidden;
-  }
-  body.style1 p {
-    font-family: LatoLight;
-  }
-  body.style1 cite {
-    font-family: LatoLight;
-  }
-  
-  @keyframes deblur {
-    from {filter: blur(30px)}
-    to {filter: blur(0px)}
-  }
-  
-  .style1 #container {
-    background: #171717;
-    background-image: url(../assets/portrait.jpg);
-    aspect-ratio: 16/9;
-    background-position: right;
-    background-repeat: no-repeat;
-    background-size: auto 100%;
-    animation: fadeIn;
-    animation-duration: 1.5s; 
+  color-scheme: dark;
+}
+
+@font-face {
+  font-family: LatoLight;
+  src: url(../assets/fonts/Lato-Light.ttf);
+}
+
+@font-face {
+  font-family: ShadowsIntoLight;
+  src: url(../assets/fonts/ShadowsIntoLight-Regular.ttf);
+}
+
+body {
+  hyphens: auto;
+  margin: 0;
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+body.style1 p {
+  font-family: LatoLight;
+}
+
+body.style1 cite {
+  font-family: LatoLight;
+}
+
+@keyframes deblur {
+  from {
+    filter: blur(30px)
   }
 
-  #container {
-    align-items: center;
-    container: inline;
-    display: none;
-    height: 100vh;
-    overflow: hidden;
-    max-height: 100vh;
+  to {
+    filter: blur(0px)
   }
+}
 
-  #container.visible {
-    display: flex;
-  }
-  
-  video {
-    display: block;
-    opacity: 10%;
-    position: absolute;
-    --height: calc(100cqh / 9);
-    --width: calc(100cqw / 16);
-    --max: max(var(--height), var(--width));
-    height: calc(var(--max) * 9);
-  }
-  
-  blockquote {
-    margin: 0;
-    padding: 3rem;
-    font-size: 4vw;
-    width: 30ch;
-    z-index: 100;
-  }
-  .style1 p {
-    filter: blur(30px);
-    animation: deblur;
-    animation-duration: 2s;
-    animation-delay: 1s;
-    animation-fill-mode: forwards;
-  }
-  p {
-    
-    word-wrap: break-word;
-    
-  }
-  
-  p::before {
-    content: "\201E";
-  }
-  
-  p::after {
-    content: "\201C";
-  }
-  
-  footer {
-    text-align: right;
-  }
-  
-  .style1 cite {
-    animation: fadeIn;
-    animation-duration: 2.5s;
-    animation-delay: 3s;
-    animation-fill-mode: forwards;
-    opacity: 0;
-  }
-  cite {
-    align-items: center;
-    display: inline-flex;
-    font-size: 1.5rem;
-    text-align: right;
-    gap: 0.35em;
-    justify-content: flex-end;
-  }
-  
-  small {
-    font-size: 0.75em;
-    font-style: normal;
-  }
-  
+.style1 #container {
+  background: #171717;
+  background-image: url(../assets/portrait.jpg);
+  aspect-ratio: 16/9;
+  background-position: right;
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+  animation: fadeIn;
+  animation-duration: 1.5s;
+}
+
+#container {
+  align-items: center;
+  container: inline;
+  display: none;
+  height: 100vh;
+  overflow: hidden;
+  max-height: 100vh;
+}
+
+#container.visible {
+  display: flex;
+}
+
+video {
+  display: block;
+  opacity: 10%;
+  position: absolute;
+  --height: calc(100cqh / 9);
+  --width: calc(100cqw / 16);
+  --max: max(var(--height), var(--width));
+  height: calc(var(--max) * 9);
+}
+
+blockquote {
+  margin: 0;
+  padding: 3rem;
+  font-size: 4vw;
+  width: 30ch;
+  z-index: 100;
+}
+
+.style1 p {
+  filter: blur(30px);
+  animation: deblur;
+  animation-duration: 2s;
+  animation-delay: 1s;
+  animation-fill-mode: forwards;
+}
+
+p {
+
+  word-wrap: break-word;
+
+}
+
+p::before {
+  content: "\201E";
+}
+
+p::after {
+  content: "\201C";
+}
+
+footer {
+  text-align: right;
+}
+
+.style1 cite {
+  animation: fadeIn;
+  animation-duration: 2.5s;
+  animation-delay: 3s;
+  animation-fill-mode: forwards;
+  opacity: 0;
+}
+
+cite {
+  align-items: center;
+  display: inline-flex;
+  font-size: 1.5rem;
+  text-align: right;
+  gap: 0.35em;
+  justify-content: flex-end;
+}
+
+small {
+  font-size: 0.75em;
+  font-style: normal;
+}
