@@ -94,13 +94,13 @@
 
             }
         }
-        function isMod(msg) { return msg.tags.isModerator == true || msg.tags.badges.broadcaster == true || msg.username == "jvpeek" };
+        function isMod(msg) { return msg.tags.isModerator == true || msg.tags.badges.broadcaster == true || msg.username.toLowerCase() == channel.toLowerCase() };
         const handleMessage = (msg) => {
             if (msg.event != "PRIVMSG") { return; }
             if (msg.tags.customRewardId != undefined) {
                 console.log(msg.tags.customRewardId);
             }
-            if (isMod || msg.username == channel) {
+            if (isMod(msg)) {
                 if (msg.message.startsWith("!unquote ")) {
                     let u = msg.message.split(" ")
                     u.shift();
