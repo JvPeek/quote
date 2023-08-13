@@ -34,6 +34,16 @@
         let timeout = 10000;
         let gap = 1000;
 
+        let deny = (function () {
+            const data = localStorage.getItem("denylist")
+            if (data) {
+                return JSON.parse(data)
+            } else {
+                return {}
+            }
+        }())
+        localStorage.setItem("denylist", JSON.stringify(deny))
+
         class Queue {
             constructor() {
                 this.elements = {};
@@ -89,6 +99,20 @@
             if (msg.event != "PRIVMSG") { return; }
             if (msg.tags.customRewardId != undefined) {
                 console.log(msg.tags.customRewardId);
+            }
+            if (isMod || msg.username == channel) {
+                if (msg.message.startsWith("!unquote ")) {
+                    let u = msg.message.split(" ")
+                    u.shift();
+                    for (const i of u) {
+                        deny[i] = true;
+                    }
+                    localStorage.setItem("denylist",JSON.stringify(deny))
+                }
+            }
+            if (deny[msg.username]) {
+                console.error(msg.username, "is on blocklist");
+                return
             }
             if (rewardID != undefined && (isMod(msg) || everyone)) {
                 if (msg.tags.customRewardId != undefined) {
