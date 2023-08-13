@@ -29,7 +29,10 @@
         let token = undefined;
         let username = undefined;
         let rewardID = undefined;
-        let channel = "JvPeek";
+        let channel = (function() {
+           let url = window.location.href;
+           return url.split('#')[1]; 
+        }());
         let everyone = false;
         let timeout = 10000;
         let gap = 1000;
