@@ -1,27 +1,52 @@
 :root {
     color-scheme: dark;
   }
-  
+  @font-face {
+    font-family: LatoLight;
+    src: url(../assets/fonts/Lato-Light.ttf);
+  }
+  @font-face {
+    font-family: ShadowsIntoLight;
+    src: url(../assets/fonts/ShadowsIntoLight-Regular.ttf);
+  }
   body {
     hyphens: auto;
     margin: 0;
     max-height: 100vh;
     overflow: hidden;
   }
-  #container {
-    align-items: center;
-    aspect-ratio: 16/9;
+  body.style1 p {
+    font-family: LatoLight;
+  }
+  body.style1 cite {
+    font-family: LatoLight;
+  }
+  
+  @keyframes deblur {
+    from {filter: blur(30px)}
+    to {filter: blur(0px)}
+  }
+  
+  .style1 #container {
     background: #171717;
     background-image: url(../assets/portrait.jpg);
+    aspect-ratio: 16/9;
     background-position: right;
     background-repeat: no-repeat;
     background-size: auto 100%;
+    animation: fadeIn;
+    animation-duration: 1.5s; 
+  }
+
+  #container {
+    align-items: center;
     container: inline;
     display: none;
     height: 100vh;
     overflow: hidden;
     max-height: 100vh;
   }
+
   #container.visible {
     display: flex;
   }
@@ -43,7 +68,13 @@
     width: 30ch;
     z-index: 100;
   }
-  
+  .style1 p {
+    filter: blur(30px);
+    animation: deblur;
+    animation-duration: 2s;
+    animation-delay: 1s;
+    animation-fill-mode: forwards;
+  }
   p {
     
     word-wrap: break-word;
@@ -62,10 +93,16 @@
     text-align: right;
   }
   
+  .style1 cite {
+    animation: fadeIn;
+    animation-duration: 2.5s;
+    animation-delay: 3s;
+    animation-fill-mode: forwards;
+    opacity: 0;
+  }
   cite {
     align-items: center;
     display: inline-flex;
-    font-family: sans-serif;
     font-size: 1.5rem;
     text-align: right;
     gap: 0.35em;
