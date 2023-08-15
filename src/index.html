@@ -29,9 +29,9 @@
         let token = undefined;
         let username = undefined;
         let rewardID = undefined;
-        let channel = (function() {
-           let url = window.location.href;
-           return url.split('#')[1]; 
+        let channel = (function () {
+            let url = window.location.href;
+            return url.split('#')[1];
         }());
         let everyone = false;
         let timeout = 10000;
@@ -103,6 +103,7 @@
             if (msg.tags.customRewardId != undefined) {
                 console.log(msg.tags.customRewardId);
             }
+
             if (isMod(msg)) {
                 if (msg.message.startsWith("!unquote ")) {
                     let u = msg.message.split(" ")
@@ -110,8 +111,19 @@
                     for (const i of u) {
                         deny[i] = true;
                     }
-                    localStorage.setItem("denylist",JSON.stringify(deny))
+                    localStorage.setItem("denylist", JSON.stringify(deny))
+                    return;
                 }
+                if (msg.message == "!quote everyone true") {
+                    everyone = true;
+                    console.log("everyone set to",everyone)
+                    return;
+                };
+                if (msg.message == "!quote everyone false") {
+                    everyone = false;
+                    console.log("everyone set to",everyone)
+                    return;
+                };
             }
             if (deny[msg.username]) {
                 console.error(msg.username, "is on blocklist");
