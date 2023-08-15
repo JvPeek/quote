@@ -29,10 +29,23 @@
         let token = undefined;
         let username = undefined;
         let rewardID = undefined;
-        let channel = "JvPeek";
+        let channel = (function () {
+            let url = window.location.href;
+            return url.split('#')[1];
+        }());
         let everyone = false;
         let timeout = 10000;
         let gap = 1000;
+
+        let deny = (function () {
+            const data = localStorage.getItem("denylist")
+            if (data) {
+                return JSON.parse(data)
+            } else {
+                return {}
+            }
+        }())
+        localStorage.setItem("denylist", JSON.stringify(deny))
 
         class Queue {
             constructor() {
@@ -84,11 +97,37 @@
 
             }
         }
-        function isMod(msg) { return msg.tags.isModerator == true || msg.tags.badges.broadcaster == true || msg.username == "jvpeek" };
+        function isMod(msg) { return msg.tags.isModerator == true || msg.tags.badges.broadcaster == true || msg.username.toLowerCase() == channel.toLowerCase() };
         const handleMessage = (msg) => {
             if (msg.event != "PRIVMSG") { return; }
             if (msg.tags.customRewardId != undefined) {
                 console.log(msg.tags.customRewardId);
+            }
+
+            if (isMod(msg)) {
+                if (msg.message.startsWith("!unquote ")) {
+                    let u = msg.message.split(" ")
+                    u.shift();
+                    for (const i of u) {
+                        deny[i] = true;
+                    }
+                    localStorage.setItem("denylist", JSON.stringify(deny))
+                    return;
+                }
+                if (msg.message == "!quote everyone true") {
+                    everyone = true;
+                    console.log("everyone set to",everyone)
+                    return;
+                };
+                if (msg.message == "!quote everyone false") {
+                    everyone = false;
+                    console.log("everyone set to",everyone)
+                    return;
+                };
+            }
+            if (deny[msg.username]) {
+                console.error(msg.username, "is on blocklist");
+                return
             }
             if (rewardID != undefined && (isMod(msg) || everyone)) {
                 if (msg.tags.customRewardId != undefined) {
@@ -113,7 +152,10 @@
         function addQuote(text) {
             let quoteUser = text.match(/@\w+/);
             let parameter = text.replace(quoteUser, "").trim();
-
+            parameter = parameter.replace(/[^\w\s\d\uD800-\uDBFF\uDC00-\uDFFF\.,!?'"()\[\]äöüÄÖÜß-]/g, '');
+            if (parameter === "") {
+                return
+            }
             let newObject = {
                 text: parameter,
                 cite: quoteUser || channel,
