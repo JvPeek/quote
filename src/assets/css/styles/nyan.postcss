@@ -1,0 +1,117 @@
+.quote--style-nyan {
+  --_scale: 10px;
+  --_sky: #036;
+  --_red: #f00;
+  --_orange: #f90;
+  --_yellow: #ff0;
+  --_green: #3f0;
+  --_light-blue: #09f;
+  --_blue: #63f;
+
+  background: radial-gradient(var(--_sky), color-mix(in srgb, var(--_sky) 50%, black));
+
+  @keyframes catanimation {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(2vw); }
+    100% { transform: translateX(0); }
+  }
+
+  @keyframes rainbowCycle {
+    0%, 33.3%, 66.7%, 100% { transform: translateX(0); } /* frames 1-2, 5-6, 9-10 */
+    16.7%, 50%, 83.3% { transform: translateX(calc(var(--_scale) * -9)); } /* frames 3-4, 7-8, 11-12 */
+  }
+
+  video {
+    --height: calc(100cqh / 9);
+    --width: calc(100cqw / 16);
+    --max: max(var(--height), var(--width));
+    height: calc(var(--max) * 9);
+    position: absolute;
+  }
+
+  > img {
+    animation: 1.7s catanimation infinite;
+    height: 25vh;
+    image-rendering: pixelated;
+    position: absolute;
+    right: 7vw;
+    top: 10vh;
+  }
+
+  blockquote {
+    font-size: 2.3vw;
+    margin: 0;
+    padding: 3rem;
+    width: 70ch;
+    z-index: 100;
+  }
+
+  p {
+    animation: 2s linear 1s forwards deblur;
+    filter: blur(30px);
+    font-family: PressStart2P;
+    font-weight: 300;
+  }
+
+  footer {
+    text-align: right;
+  }
+
+  cite {
+    align-items: center;
+    animation: 2.5s linear 3s forwards fadeIn;
+    display: inline-flex;
+    font-family: PressStart2P;
+    font-size: 1.5rem;
+    gap: 1em;
+    justify-content: flex-end;
+    opacity: 0;
+    text-align: right;
+  }
+
+  small {
+    font-size: 1.25rem;
+    font-style: normal;
+  }
+
+  .rainbow {
+    height: calc(var(--_scale) * 19);
+    left: 0;
+    position: absolute;
+    right: 18%;
+    top: 11.4%;
+
+    .sprite {
+      animation: 1s step-end infinite rainbowCycle;
+      background-image:
+        linear-gradient(to right, var(--_red)        0%, var(--_red)        50%, transparent        50%, transparent        100%),
+        linear-gradient(to right, transparent        0%, transparent        50%, var(--_red)        50%, var(--_red)        100%),
+        linear-gradient(to right, var(--_orange)     0%, var(--_orange)     50%, transparent        50%, transparent        100%),
+        linear-gradient(to right, transparent        0%, transparent        50%, var(--_orange)     50%, var(--_orange)     100%),
+        linear-gradient(to right, var(--_yellow)     0%, var(--_yellow)     50%, transparent        50%, transparent        100%),
+        linear-gradient(to right, transparent        0%, transparent        50%, var(--_yellow)     50%, var(--_yellow)     100%),
+        linear-gradient(to right, var(--_green)      0%, var(--_green)      50%, transparent        50%, transparent        100%),
+        linear-gradient(to right, transparent        0%, transparent        50%, var(--_green)      50%, var(--_green)      100%),
+        linear-gradient(to right, var(--_light-blue) 0%, var(--_light-blue) 50%, transparent        50%, transparent        100%),
+        linear-gradient(to right, transparent        0%, transparent        50%, var(--_light-blue) 50%, var(--_light-blue) 100%),
+        linear-gradient(to right, var(--_blue)       0%, var(--_blue)       50%, transparent        50%, transparent        100%),
+        linear-gradient(to right, transparent        0%, transparent        50%, var(--_blue)       50%, var(--_blue)       100%);
+      background-position:
+        0 0,
+        0 var(--_scale),
+        0 calc(var(--_scale) * 3),
+        0 calc(var(--_scale) * 4),
+        0 calc(var(--_scale) * 6),
+        0 calc(var(--_scale) * 7),
+        0 calc(var(--_scale) * 9),
+        0 calc(var(--_scale) * 10),
+        0 calc(var(--_scale) * 12),
+        0 calc(var(--_scale) * 13),
+        0 calc(var(--_scale) * 15),
+        0 calc(var(--_scale) * 16);
+      background-repeat: repeat-x;
+      background-size: calc(var(--_scale) * 16) calc(var(--_scale) * 3);
+      height: 100%;
+    }
+  }
+}
