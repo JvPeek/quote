@@ -1,0 +1,55 @@
+.quote--style-train {
+  color: #000;
+
+  video {
+    --height: calc(100cqh / 9);
+    --width: calc(100cqw / 16);
+    --max: max(var(--height), var(--width));
+    height: calc(var(--max) * 9);
+    position: absolute;
+  }
+
+  img {
+    height: 80vh;
+    margin-top: 20vh;
+    position: absolute;
+    right: 5vw;
+  }
+
+  blockquote {
+    filter: drop-shadow(0 0 50px #fff) drop-shadow(0 0 50px #fff) drop-shadow(0 0 50px #fff) drop-shadow(0 0 50px #fff) drop-shadow(0 0 50px #fff) drop-shadow(0 0 50px #fff) drop-shadow(0 0 50px #fff) drop-shadow(0 0 50px #fff);
+    font-size: 4vw;
+    margin: 0;
+    padding: 3rem;
+    width: 30ch;
+    z-index: 100;
+  }
+
+  p {
+    animation: 2s linear 1s forwards deblur;
+    filter: blur(30px);
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 300;
+  }
+
+  footer {
+    text-align: right;
+  }
+
+  cite {
+    align-items: center;
+    animation: 2.5s linear 3s forwards fadeIn;
+    display: inline-flex;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.5rem;
+    gap: 0.35em;
+    justify-content: flex-end;
+    opacity: 0;
+    text-align: right;
+  }
+
+  small {
+    font-size: 1.1rem;
+    font-style: normal;
+  }
+}

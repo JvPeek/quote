@@ -1,0 +1,48 @@
+.quote--style-minecraft {
+  video {
+    --height: calc(100cqh / 9);
+    --width: calc(100cqw / 16);
+    --max: max(var(--height), var(--width));
+    display: block;
+    filter: opacity(0.1);
+    position: absolute;
+    height: calc(var(--max) * 9);
+  }
+
+  blockquote {
+    font-size: 4vw;
+    margin: 0;
+    padding: 3rem;
+    width: 30ch;
+    z-index: 100;
+  }
+
+  p {
+    animation: 2s linear 1s forwards deblur;
+    filter: blur(30px);
+    font-family: Mojang;
+    font-weight: 300;
+  }
+
+  footer {
+    text-align: right;
+  }
+
+  cite {
+    align-items: center;
+    animation: 2.5s linear 3s forwards fadeIn;
+    display: inline-flex;
+    font-family: Mojang;
+    font-size: 1.5rem;
+    font-weight: 300;
+    gap: 0.5em;
+    justify-content: flex-end;
+    opacity: 0;
+    text-align: right;
+  }
+
+  small {
+    font-size: 1rem;
+    font-style: normal;
+  }
+}
